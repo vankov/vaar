@@ -6,6 +6,12 @@ from semantics import KazumaSemantics
 
 class VectorEncoder:
     
+    def get_sem_dim(self):
+        """
+            Returns the dimension of the semantic vectors
+        """
+        return self.__sem_dim
+        
     def _encode_predicate_semantics(self, predicate):
         """
             Returns a vector of frandom numbers
@@ -60,8 +66,13 @@ class VectorEncoder:
         np.random.shuffle(self.__free_indicies)
         
     def encode_predicates(self, predicates):
-        semantics = np.zeros(shape=(self.__n_slots, self.__sem_dim), dtype=self.__dtype)
-        structure = np.zeros(shape=(self.__max_arity, self.__n_slots, self.__n_slots), dtype=self.__dtype)
+        semantics = np.random.normal(
+                loc=0,
+                scale=0,
+                size=(self.__n_slots, self.__sem_dim))
+        structure = np.ones(
+                shape=(self.__max_arity, self.__n_slots, self.__n_slots), 
+                dtype=self.__dtype) * -1.0
         assert type(predicates) is list
         
         self.__encoded_predicates = []

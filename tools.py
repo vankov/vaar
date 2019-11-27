@@ -1,5 +1,6 @@
 def print_v(v, precision = 0, predicates = []):
     (sem, struct) = v
+
     format_str = "{:>" + str(precision + 3) + "." + str(precision) + "f}"
         
     print("\n")
@@ -9,8 +10,8 @@ def print_v(v, precision = 0, predicates = []):
                                     lambda x: str(x) if x != None else "", 
                                     predicates
                                 )
-                            )
-
+                            )    
+    
     for wm_i in range(struct.shape[1]):
         print(
                 " ".join(list(
@@ -22,11 +23,11 @@ def print_v(v, precision = 0, predicates = []):
                     [" ".join(
                         list(
                           map(
-                            lambda x: format_str.format(x), x)) 
+                            lambda x: format_str.format(x), x)))
                                 for x in [
                                     struct_ai[wm_i] for struct_ai in struct
                                 ]
-                        )
+                            
                     ]
                 )        
                 +

@@ -7,6 +7,7 @@ import pickle
 from pathlib import Path
 
 import tensorflow.compat.v1 as tf
+import tensorflow.keras as K
 import numpy as np
 from scipy.special import factorial
 
@@ -175,15 +176,26 @@ class VectorAnalogy:
         #compute numerator
         num_sem = tf.reduce_sum(tf.multiply(sem_targets, sem_base), axis=[2])        
         #compute cosine similarity
-        sem_cos = tf.add(tf.multiply(tf.divide(num_sem, denom_sem), 0.5), 0.5) 
-                
+        sem_cos = -K.losses.cosine_similarity(sem_targets, sem_base, axis=[2])
+        #tf.add(tf.multiply(tf.divide(num_sem, denom_sem), 0.5), 0.5) 
+        print(sem_cos)
         #compute structure denominator for cosine similarity
-        denom_struct = tf.reduce_sum(struct_targets, axis=[2])
+        denom_struct = tf.multiply( 
+            tf.sqrt(
+                tf.reduce_sum(
+                    tf.multiply(struct_targets, struct_targets), 
+                    axis=[2])),                
+            tf.sqrt(
+                tf.reduce_sum(
+                    tf.multiply(struct_base, struct_base), 
+                    axis=[2])))            
         #compute numerator
         num_struct = tf.reduce_sum(
                 tf.multiply(struct_targets, struct_base), axis=[2])
+        
         #compute cosine similarity
-        struct_cos = tf.divide(num_struct, denom_struct)
+        struct_cos = -K.losses.cosine_similarity(struct_targets, struct_base, axis=[2])
+        #tf.divide(num_struct, denom_struct)
         
         similarities = tf.add(
                 tf.multiply(sem_cos, 1 - self._sigma), 

@@ -93,8 +93,8 @@ class VectorMapping:
         max_similarity = 0
         most_similar_v2 = v2
         
-        for representation in self.__get_wm_state(n_predicates, n_slots):
-            v2_t = self.__recode_representation(v2, representation)
+        for encoding in self.__get_encoding(n_predicates, n_slots):
+            v2_t = self.__recode_representation(v2, encoding)
             
             t_sim = \
                     (1 - self._sigma) * self._compare_semantics(v1, v2_t) \
