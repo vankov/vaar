@@ -70,9 +70,9 @@ class VectorEncoder:
                 loc=0,
                 scale=0,
                 size=(self.__n_slots, self.__sem_dim))
-        structure = np.ones(
+        structure = np.zeros(
                 shape=(self.__max_arity, self.__n_slots, self.__n_slots), 
-                dtype=self.__dtype) * 0.0
+                dtype=self.__dtype)
         assert type(predicates) is list
         
         self.__encoded_predicates = []
